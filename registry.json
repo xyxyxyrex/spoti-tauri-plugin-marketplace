@@ -1,0 +1,11 @@
+[
+    {
+        "id": "receiptify",
+        "name": "Receiptify",
+        "description": "Transform playing logs into a grocery receipt.",
+        "icon": "🧾",
+        "url": "https://raw.githubusercontent.com/your-org/spotdl-plugin-marketplace/main/plugins/receiptify.js",
+        "downloads": 1420,
+        "lastUpdated": "20-May-2026"
+    }
+]
