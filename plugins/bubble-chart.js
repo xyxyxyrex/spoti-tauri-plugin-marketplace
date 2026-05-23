@@ -284,6 +284,7 @@ function launchBubbleChart() {
             });
 
             let hoveredSong = null;
+            let alpha = 1.0;
             const detailPanel = document.getElementById("bubble-detail-panel");
 
             // Set up mouse events
@@ -291,6 +292,9 @@ function launchBubbleChart() {
                 const rect = canvas.getBoundingClientRect();
                 const mx = e.clientX - rect.left;
                 const my = e.clientY - rect.top;
+
+                // Keep simulation warm while cursor moves
+                alpha = Math.max(alpha, 0.28);
 
                 let match = null;
                 topSongs.forEach(song => {
@@ -301,6 +305,7 @@ function launchBubbleChart() {
                 });
 
                 if (match !== hoveredSong) {
+                    alpha = 1.0; // Re-heat simulation to cleanly resolve hover scaling overlaps
                     if (hoveredSong) hoveredSong.targetR = hoveredSong.baseR; // reset
                     hoveredSong = match;
                     if (hoveredSong) {
@@ -348,9 +353,12 @@ function launchBubbleChart() {
             function animate() {
                 if (!isRunning) return;
                 
+                // Slow cooling/annealing decay
+                alpha = Math.max(0.002, alpha * 0.98);
+
                 // Relaxation Simulation Parameters
-                const gravity = 0.055;
-                const friction = 0.82;
+                const gravity = 0.025 * alpha;
+                const friction = 0.72; // Dampen speed much faster to prevent high-frequency orbit/jitters
 
                 // 1. Force towards Center
                 topSongs.forEach(c => {
@@ -383,10 +391,17 @@ function launchBubbleChart() {
                             const forceX = (dx / d) * overlap * 0.52;
                             const forceY = (dy / d) * overlap * 0.52;
 
+                            // Adjust position
                             c1.x -= forceX;
                             c1.y -= forceY;
                             c2.x += forceX;
                             c2.y += forceY;
+
+                            // Dampen relative velocities to absorb bounce energy
+                            c1.vx -= forceX * 0.18;
+                            c1.vy -= forceY * 0.18;
+                            c2.vx += forceX * 0.18;
+                            c2.vy += forceY * 0.18;
                         }
                     }
                 }
