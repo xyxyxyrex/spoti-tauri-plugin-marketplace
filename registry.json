@@ -16,5 +16,14 @@
         "url": "https://raw.githubusercontent.com/xyxyxyrex/spoti-tauri-plugin-marketplace/main/plugins/history-stats.js",
         "downloads": 5,
         "lastUpdated": "21-May-2026"
+    },
+    {
+        "id": "bubble-chart",
+        "name": "Bubble Mastery",
+        "description": "Generates a dynamic packed circle bubble chart of your top 100 played songs mapped visually by playcount.",
+        "icon": "🫧",
+        "url": "https://raw.githubusercontent.com/xyxyxyrex/spoti-tauri-plugin-marketplace/main/plugins/bubble-chart.js",
+        "downloads": 112,
+        "lastUpdated": "24-May-2026"
     }
 ]
